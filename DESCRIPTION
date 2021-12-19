@@ -1,0 +1,11 @@
+Package: jyunr
+Type: Package
+Title: What the Package Does in One 'Title Case' Line
+Version: 0.0.1
+Date: 2021-12-19
+Author: Jonghyun Yun
+Maintainer: Jonghyun Yun <jonghyun.yun@gmail.com>
+Description: R functions for scientific computing and visualization
+License: GPL (>= 3)
+Imports: Rcpp (>= 1.0.6), ggplot2
+LinkingTo: Rcpp
