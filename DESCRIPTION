@@ -7,5 +7,6 @@ Author: Jonghyun Yun
 Maintainer: Jonghyun Yun <jonghyun.yun@gmail.com>
 Description: R functions for scientific computing and visualization
 License: GPL (>= 3)
-Imports: Rcpp (>= 1.0.6), ggplot2
+Depends: ggplot2
+Imports: Rcpp (>= 1.0.6), grid, tidyr
 LinkingTo: Rcpp

@@ -1,0 +1,9 @@
+[submodule "maker"]
+	path = maker
+	url = https://www.github.com/ComputationalProteomicsUnit/maker.git
+[submodule "hrbrthemes"]
+	path = hrbrthemes
+	url = https://github.com/Jonghyun-Yun/hrbrthemes.git
+[submodule "ggsci"]
+	path = ggsci
+	url = https://github.com/Jonghyun-Yun/ggsci.git
