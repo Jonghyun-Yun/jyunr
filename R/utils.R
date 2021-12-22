@@ -14,13 +14,13 @@ kable2file <- function(ftab, fname) {
 }
 
 list2file <- function(flist, fname) {
-  if (!is.list(flist)) error("fstr must be a list object ")
+  if (!is.list(flist)) stop("fstr must be a list object ")
   if (file.exists(fname)) {
     ## Delete file if it exists
     file.remove(fname)
   }
   fcon <- file(fname)
-  for (kk in 1:length(flist)) writeLines(flist[[kk]], fcon)
+  for (kk in seq_along(flist)) writeLines(flist[[kk]], fcon)
   close(fcon)
 }
 
@@ -65,7 +65,46 @@ mat2mean_sd <- function(mm, sd,
     rtn <- gsub("\\$\\\\pm\\$", "&plusmn;", rtn)
   }
 
-  rtn = as.data.frame(array(rtn,dim=dim(mm)))
+  rtn = as.data.frame(array(rtn, dim = dim(mm)))
   names(rtn) = names(mm)
   return(rtn)
+}
+
+## set figure size (inches)
+set_fig_size = function(width, fraction=1, subplots=c(1, 1)) {
+    ## Set figure dimensions to avoid scaling in LaTeX.
+
+    ## Parameters
+    ## ----------
+    ## width: float or string
+    ##         Document width in points, or string of predined document type
+    ## fraction: float, optional
+    ##         Fraction of the width which you wish the figure to occupy
+    ## subplots: array-like, optional
+    ##         The number of rows and columns of subplots.
+    ## Returns
+    ## -------
+    ## fig_dim: tuple
+    ##         Dimensions of figure in inches
+
+    if (width == 'thesis') width_pt = 426.79135
+    else if (width == 'beamer') width_pt = 307.28987
+    else if (width == 'psychometrikaV2') width_pt = 469.75502
+    else width_pt = width
+
+    # Width of figure (in pts)
+    fig_width_pt = width_pt * fraction
+    # Convert from pt to inches
+    inches_per_pt = 1 / 72.27
+
+    # Golden ratio to set aesthetic figure height
+    # https://disq.us/p/2940ij3
+    golden_ratio = (5^.5 - 1) / 2
+
+    # Figure width in inches
+    fig_width_in = fig_width_pt * inches_per_pt
+    # Figure height in inches
+    fig_height_in = fig_width_in * golden_ratio * (subplots[1] / subplots[2])
+
+    return(c(fig_width_in, fig_height_in))
 }

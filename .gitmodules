@@ -7,3 +7,6 @@
 [submodule "ggsci"]
 	path = ggsci
 	url = https://github.com/Jonghyun-Yun/ggsci.git
+[submodule "plotmm"]
+	path = plotmm
+	url = https://github.com/pdwaggoner/plotmm.git

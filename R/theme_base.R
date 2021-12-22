@@ -1,6 +1,5 @@
 ## * theme base
-theme_base =
-function (base_family = "", base_size = 11.5,
+theme_base = function(base_family = "", base_size = 11.5,
     plot_title_family = base_family, plot_title_size = 18, plot_title_face = "bold",
     plot_title_margin = 10, subtitle_family = base_family,
     subtitle_size = 13, subtitle_face = "plain", subtitle_margin = 15,
@@ -11,14 +10,17 @@ function (base_family = "", base_size = 11.5,
     axis_title_size = 13, axis_title_face = "bold", axis_title_just = "mm",
     plot_margin = margin(30, 30, 30, 30), panel_spacing = grid::unit(2,
         "lines"), grid_col = "#cccccc", grid = TRUE, axis_col = "#cccccc",
-    axis = FALSE, ticks = FALSE, axis_text = TRUE, ...)
-{
+    axis = FALSE, ticks = FALSE, axis_text = TRUE, border_col = "#cccccc",
+    panel_border = FALSE, ...) {
     ret <- ggplot2::theme_minimal(base_family = base_family,
         base_size = base_size)
     ret <- ret + theme(legend.background = element_blank())
     ret <- ret + theme(legend.key = element_blank())
     ret <- ret + theme(plot.margin = plot_margin)
     ret <- ret + theme(panel.spacing = panel_spacing)
+    if (panel_border == TRUE) {
+      ret <- ret +
+        theme(panel.border = element_rect(color = border_col, fill = NA, size = 0.1))}
     if (inherits(grid, "character") | grid == TRUE) {
         ret <- ret + theme(panel.grid = element_line(color = grid_col,
             size = 0.2))
@@ -88,10 +90,6 @@ function (base_family = "", base_size = 11.5,
         ret <- ret + theme(axis.ticks.length = grid::unit(5,
             "pt"))
     }
-    xj <- switch(tolower(substr(axis_title_just, 1, 1)), b = 0,
-        l = 0, m = 0.5, c = 0.5, r = 1, t = 1)
-    yj <- switch(tolower(substr(axis_title_just, 2, 2)), b = 0,
-        l = 0, m = 0.5, c = 0.5, r = 1, t = 1)
     if (inherits(axis_text, "character") | axis_text == TRUE) {
       ret <- ret + theme(axis.text = element_text(
         size = axis_text_size,
@@ -132,13 +130,26 @@ function (base_family = "", base_size = 11.5,
     }
     ret <- ret + theme(axis.title = element_text(size = axis_title_size,
         family = axis_title_family))
+    if (substr(axis_title_just, 1, 1) != "F") {
+    xj <- switch(tolower(substr(axis_title_just, 1, 1)), b = 0,
+        l = 0, m = 0.5, c = 0.5, r = 1, t = 1)
     ret <- ret + theme(axis.title.x = element_text(hjust = xj,
         size = axis_title_size, family = axis_title_family, face = axis_title_face))
-    ret <- ret + theme(axis.title.y = element_text(hjust = yj,
+    } else {
+    ret <- ret + theme(axis.title.x = element_blank())
+    }
+    if (substr(axis_title_just, 2, 2) != "F") {
+    yj <- switch(tolower(substr(axis_title_just, 2, 2)), b = 0,
+        l = 0, m = 0.5, c = 0.5, r = 1, t = 1)
+     ret <- ret + theme(axis.title.y = element_text(hjust = yj,
         size = axis_title_size, family = axis_title_family, face = axis_title_face))
     ret <- ret + theme(axis.title.y.right = element_text(hjust = yj,
         size = axis_title_size, angle = 90, family = axis_title_family,
         face = axis_title_face))
+    } else {
+      ret <- ret + theme(axis.title.y = element_blank(),
+                         axis.title.y.right = element_blank())
+    }
     ret <- ret + theme(strip.text = element_text(hjust = strip_text_hjust, size = strip_text_size,
         face = strip_text_face, family = strip_text_family))
     ret <- ret + theme(plot.title = element_text(hjust = 0, size = plot_title_size,
