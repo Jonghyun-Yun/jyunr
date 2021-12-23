@@ -108,3 +108,11 @@ set_fig_size = function(width, fraction=1, subplots=c(1, 1)) {
 
     return(c(fig_width_in, fig_height_in))
 }
+
+## print cat header
+cathead <- function(fstr) {
+ cat("
+################################################################################
+### ", fstr, "
+################################################################################\n")
+}
